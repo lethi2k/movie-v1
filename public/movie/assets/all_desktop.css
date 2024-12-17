@@ -1,0 +1,52 @@
+
+@media (min-width:992px) {
+    #hotest {
+        margin-bottom: 5rem
+    }
+    
+    .text-lg-left {
+        text-align: left !important
+    }
+
+    .text-lg-right {
+        text-align: right !important
+    }
+
+    .text-lg-center {
+        text-align: center !important
+    }
+}
+
+@media (min-width:1200px) {
+    section .head .title {
+        font-size: 24px;
+    }
+
+    .top-tables {
+        margin-top: 50px;
+    }
+
+    footer {
+        margin-top: 60px;
+    }
+
+    .azlist ul li a {
+        font-size: 16px;
+    }
+    
+    #w-info .binfo .info {
+        margin-left: 15px;
+    }
+
+    .change-server ul {
+        display: block;
+    }
+
+    .change-server ul li a svg {
+        margin-right: 10px;
+    }
+
+    #comments .body{
+        max-height: 800px;
+    }
+}

@@ -1,0 +1,23 @@
+---
+cách đặt tên và phân luồng router
+- commet rõ ràng sau mỗi khối sử dụng
+- group các chức năng dùng chung vào 1 khối và đặt tên theo chức năng của khối
+- đặt tên khối trùng với tên class hoặc forder từ controller
+- đặt tên router trùng với tên function phía controller
+
+---
+cách đặt tên trên controller
+
+---
+cách dùng trong service
+
+---
+cách phân luồng trong blade 
+
+---
+cách sử dụng provider
+---
+cách sử dụng model
+---
+cách xử lý job, monitor
+

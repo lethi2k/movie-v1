@@ -1,0 +1,10 @@
+=> sản phẩm:
+=> kho hàng:
+nhập hàng 
+xuất hàng
+hủy hàng
+nhà cung cấp
+=> Khách hàng
+nhóm khách hàng
+khách hàng
+=> Cửa hàng

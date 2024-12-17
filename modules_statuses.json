@@ -1,0 +1,16 @@
+{
+    "Admin": true,
+    "Category": true,
+    "Attribute": true,
+    "Core": true,
+    "Customer": true,
+    "Product": true,
+    "Shop": true,
+    "User": true,
+    "Blog": true,
+    "Option": true,
+    "Manufacturer": true,
+    "Layout": true,
+    "Theme": true,
+    "Movie": true
+}

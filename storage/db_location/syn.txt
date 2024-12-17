@@ -1,0 +1,46 @@
+$location = json_decode(File::get(storage_path('db_location/db.json')), true);
+        foreach ($location['province'] as $key => $province) {
+            if (!isset($province['idProvince'])) {
+                break;
+            }
+
+            if (isset($province['idProvince'])) {
+                $model = new Province();
+                $model->province_id = $province['idProvince'];
+                $model->county_id = 230;
+                $model->name = $province['name'];
+                $model->save();
+                unset($location['province'][$key]);
+            }
+        }
+
+        foreach ($location['district'] as $key => $district) {
+            if (!isset($district['idDistrict'])) {
+                break;
+            }
+
+            if (isset($district['idDistrict'])) {
+                $model = new District();
+                $model->district_id = $district['idDistrict'];
+                $model->province_id = $district['idProvince'];
+                $model->name = $district['name'];
+                $model->save();
+                unset($location['district'][$key]);
+            }
+        }
+
+        foreach ($location['commune'] as $key => $commune) {
+
+            if (!isset($commune['idCommune'])) {
+                break;
+            }
+
+            if (isset($commune['idCommune'])) {
+                $model = new Commune();
+                $model->commune_id = (int) $commune['idCommune'];
+                $model->district_id = $commune['idDistrict'];
+                $model->name = $commune['name'];
+                $model->save();
+                unset($location['commune'][$key]);
+            }
+        }

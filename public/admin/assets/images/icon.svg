@@ -1,0 +1,32 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg702682" version="1.1" viewBox="261.9 243.6 500.19 280.8">
+  <metadata id="metadata702688" fill="#FFFFFF">
+    <rdf:rdf fill="#FFFFFF">
+      <cc:work rdf:about="" fill="#FFFFFF">
+        <dc:format fill="#FFFFFF">image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" fill="#FFFFFF"/>
+      </cc:work>
+    </rdf:rdf>
+  </metadata>
+  <defs id="defs702686"/>
+  <linearGradient spreadMethod="pad" y2="30%" x2="-10%" y1="120%" x1="30%" id="3d_gradient2-logo-f2949677-bf11-41ea-a073-768096f81b14" fill="#FFFFFF">
+    <stop id="stop702663" stop-opacity="1" stop-color="#ffffff" offset="0%" fill="#FFFFFF"/>
+    <stop id="stop702665" stop-opacity="1" stop-color="#000000" offset="100%" fill="#FFFFFF"/>
+  </linearGradient>
+  <linearGradient gradientTransform="rotate(-30)" spreadMethod="pad" y2="30%" x2="-10%" y1="120%" x1="30%" id="3d_gradient3-logo-f2949677-bf11-41ea-a073-768096f81b14" fill="#FFFFFF">
+    <stop id="stop702668" stop-opacity="1" stop-color="#ffffff" offset="0%" fill="#FFFFFF"/>
+    <stop id="stop702670" stop-opacity="1" stop-color="#cccccc" offset="50%" fill="#FFFFFF"/>
+    <stop id="stop702672" stop-opacity="1" stop-color="#000000" offset="100%" fill="#FFFFFF"/>
+  </linearGradient>
+  <g id="logo-group" fill="#FFFFFF">
+    <image xlink:href="" id="container" x="272" y="144" width="480" height="480" style="display: none;" transform="translate(0 0)" fill="#FFFFFF"/>
+    <g id="logo-center" transform="translate(0 0)" fill="#FFFFFF">
+      <image xlink:href="" id="icon_container" x="0" y="0" style="display: none;" fill="#FFFFFF"/>
+      <g id="slogan" style="font-style:oblique;font-weight:normal;font-size:32px;line-height:1;font-family:'Fira Sans Condensed';font-variant-ligatures:none;text-align:center;text-anchor:middle" transform="translate(0 0)" fill="#FFFFFF"/>
+      <g id="title" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Sans 30 Bold';font-variant-ligatures:normal;text-align:center;text-anchor:middle" transform="translate(0 0)" fill="#FFFFFF">
+        <path id="path702691" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Sans 30 Bold';font-variant-ligatures:normal;text-align:center;text-anchor:middle" d="m 494.73462,-25.92 h -11.016 v 9.36 L 497.97462,0 h 12.38401 l -14.25601,-16.56 h -1.368 c 9.216,0 14.76,-5.904 14.76,-14.76 0,-9.216 -5.976,-14.688 -14.76,-14.688 h -23.76 V 0 h 9.36001 v -36.648 h 14.39999 c 4.536,0 5.40001,0.792 5.40001,5.328 0,4.464 -0.86401,5.4 -5.40001,5.4 z" stroke-width="0px" stroke-linejoin="miter" stroke-miterlimit="2" fill="#0000FF" stroke="#0000FF" transform="translate(0 425.8) translate(261.9038600000002 -179.608) scale(6) translate(-470.97462 46.008)"/>
+        <path id="path702693" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Sans 30 Bold';font-variant-ligatures:normal;text-align:center;text-anchor:middle" d="m 553.04,-25.416 h -19.224 v 9.36 h 9.576 C 542.672,-9.432 540.44,-9 533.384,-9 c -9.72,0 -10.44,-0.936 -10.44,-14.112 0,-13.464 0.504,-13.968 10.44,-13.968 7.632,0 8.352,0.288 9.504,5.688 h 9.504 c -1.728,-10.44 -7.488,-15.048 -19.008,-15.048 -14.112,0 -19.8,6.264 -19.8,23.328 0,16.416 5.472,23.472 19.8,23.472 13.392,0 19.656,-6.264 19.656,-25.776 z" stroke-width="0px" stroke-linejoin="miter" stroke-miterlimit="2" fill="#FF7C00" stroke="#FF7C00" transform="translate(0 425.8) translate(525.3601399999998 -182.2) scale(6) translate(-513.584 46.44)"/>
+      </g>
+      <image xlink:href="" id="icon" x="0" y="0" style="display: none;" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

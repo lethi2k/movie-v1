@@ -1,0 +1,17 @@
+<?php
+
+namespace Modules\Blog\Models\Categories;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Path extends Model
+{
+    use HasFactory;
+
+    protected $table = 'oc_cat_news_path';
+    protected $primaryKey = 'category_id';
+    protected $fillable = ['category_id', 'path_id', 'level']; //use :create, :update no use :insert
+
+    public $timestamps = false;
+}

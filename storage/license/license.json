@@ -1,0 +1,39 @@
+{
+  "name": "License",
+  "url": "https://zozo.vn",
+  "api": "https://zozo.vn/api",
+  "rootDomain": ".myzozo.net",
+  "copyright": {
+    "brand": "Zozo",
+    "logo": "https://zozo.vn/public/resources/license/logo.png",
+    "logoMini": "https://zozo.vn/public/resources/license/logo-mini.png",
+    "favicon": "https://zozo.vn/public/resources/license/favicon.png",
+    "website": "https://zozo.vn/?utm_source={domain}&utm_medium=referral&utm_campaign=admincopyright&utm_term=footerurl&utm_content=footer",
+    "promosUrl": "https://zozo.vn/promos",
+    "company": "Công ty TNHH Phần mềm Zozo",
+    "tel": "0936.062.166/0904.886.094",
+    "email": "web@zozo.vn",
+    "address": "Số 247 Cầu Giấy, P Dịch Vọng, Q Cầu Giấy, TP Hà Nội"
+  },
+  "supportUrls": {
+    "homepage": "http://zozo.vn",
+    "support": "https://zozo.vn/ho-tro"
+  },
+  "domainConfig": {
+    "registration": "https://inet.vn/dang-ky-ten-mien",
+    "updateRecord": "https://support.inet.vn/312860-H%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-tr%E1%BB%8F-t%C3%AAn-mi%E1%BB%81n-v%E1%BB%81-hosting",
+    "registrar": "iNET"
+  },
+  "smtp": {
+    "hostname": "",
+    "username": "",
+    "password": "",
+    "port": "465",
+    "timeout": "5"
+  },
+  "resources": {
+    "urlProductTemplate": "https://zozo.vn/public/resources/products_import_template.xls",
+    "urlLivechat": "https://zozo.vn/kho-ung-dung?type=Ch%C4%83m%20s%C3%B3c%20kh%C3%A1ch%20h%C3%A0ng"
+  },
+  "createdDate": "2017-11-22 08:00:00"
+}
