@@ -25,6 +25,6 @@ Route::get('/forgot-password', [MovieController::class, 'forgotPassword'])->name
 Route::get('/register', [MovieController::class, 'register'])->name('home.register');
 Route::post('/sign-up', [MovieController::class, 'signUp'])->name('home.sign-up');
 Route::get('/sign-out', [MovieController::class, 'signOut'])->name('home.sign-out');
-Route::fallback(function () {
-    return redirect()->route('home.index');
-});
+// Route::fallback(function () {
+//     return redirect()->route('home.index');
+// });

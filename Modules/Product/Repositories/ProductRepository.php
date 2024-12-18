@@ -220,7 +220,7 @@ class ProductRepository implements ProductRepositoryInterface
         $category_parents = $this->categoryService->getList([], 100);
         $manufacturers = $this->manufacturerService->getList([], 100);
         $options = $this->variantService->getList([], 100);
-        $product = Product::findOrFail($id);
+        $product = Product::with('description', 'categories')->findOrFail($id);
 
         return [
             'category_parents' => $category_parents,
