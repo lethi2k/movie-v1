@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\Ecommerce\Api\CategoryController;
+use Modules\Admin\Http\Controllers\Ecommerce\Api\CustomerController;
 use Modules\Admin\Http\Controllers\Ecommerce\Api\ProductController;
 use Modules\Movie\Http\Controllers\Api\MovieController;
 
@@ -41,6 +42,11 @@ Route::prefix('admin')->group(function () {
         Route::post('update/{id}', [CategoryController::class, 'update'])->name('admin-api.category.update');
         Route::get('destroy/{id}', [CategoryController::class, 'destroy'])->name('admin-api.category.destroy');
         Route::post('change/status', [CategoryController::class, 'changeStatus'])->name('admin-api.category.change.status');
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [CustomerController::class, 'index'])->name('admin-api.users.list');
+        Route::post('store', [CustomerController::class, 'store'])->name('admin-api.users.store');
     });
 });
 

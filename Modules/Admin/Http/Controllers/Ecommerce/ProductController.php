@@ -93,6 +93,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         // ProductRequest
         $this->productService->store($request->all());
         return redirect()->action([ProductController::class, 'index'])->with('success', 'Thêm thành công');

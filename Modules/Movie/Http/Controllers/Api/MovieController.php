@@ -27,16 +27,30 @@ class MovieController extends Controller
         $this->productService = $productService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productService->getList([
-            'filter' => [
-                'date_added' => 'desc',
-                'category' => [
-                    'category_id' => 2
-                ],
-            ]
-        ], 24);
+        $filter = [
+            'filter' => $request->only(['keyword', 'categories'])
+        ];
+
+        $filter['filter']['date_added'] = 'desc';
+        $filter['filter']['category'] = [
+            'category_id' => 2
+        ];
+
+        if ($request->category) {
+            $categories = $this->categoryService->getList(['category_name' => slugToTitle($request->category)], 20);
+            $filter['filter']['categories'] = $categories->pluck('category_id')->toArray();
+        }
+
+        if ($request->keyword) {
+            $filter['filter']['product'] = [
+                'key' => 'name',
+                'value' => $request->keyword
+            ];
+        }
+
+        $products = $this->productService->getList($filter, 24);
 
         return response()->json([
             'products' => $products,

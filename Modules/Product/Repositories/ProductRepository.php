@@ -128,7 +128,7 @@ class ProductRepository implements ProductRepositoryInterface
 
                 $params['product']['model'] = gen_model($params['product']);
                 $params['product']['status'] = $params['product']['status'] == 'active' ? 1 : 0;
-                $params['product']['user_id'] = auth()->guard('admin')->user()->user_id;
+                $params['product']['user_id'] = auth()->guard('admin')->user()->user_id ?? 1;
 
                 $product = Product::create($params['product']);
                 $product_id = $product->product_id;
