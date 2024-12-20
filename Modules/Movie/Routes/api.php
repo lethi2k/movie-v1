@@ -60,8 +60,8 @@ Route::prefix('products')->group(function () {
     Route::get('/', [MovieController::class, 'index'])->name('home.products.index');
     Route::get('/list', [MovieController::class, 'products'])->name('home.products.list');
     Route::get('/last-update', [MovieController::class, 'lastUpdate'])->name('home.last-update');
-    Route::get('/{slug}', [MovieController::class, 'show'])->name('home.detail');
     Route::get('/trends', [MovieController::class, 'productsTrend'])->name('home.product-trend');
+    Route::get('/{slug}', [MovieController::class, 'show'])->name('home.detail');
 });
 
 Route::get('/categories', [MovieController::class, 'categories'])->name('home.category');
