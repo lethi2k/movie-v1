@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\Ecommerce\Api\CategoryController;
 use Modules\Admin\Http\Controllers\Ecommerce\Api\CustomerController;
 use Modules\Admin\Http\Controllers\Ecommerce\Api\ProductController;
+use Modules\Admin\Http\Controllers\Ecommerce\Api\TagController;
 use Modules\Movie\Http\Controllers\Api\MovieController;
 
 /*
@@ -47,6 +48,11 @@ Route::prefix('admin')->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('admin-api.users.list');
         Route::post('store', [CustomerController::class, 'store'])->name('admin-api.users.store');
+    });
+
+    Route::prefix('tags')->group(function () {
+        Route::get('/', [TagController::class, 'index'])->name('admin-api.tags.list');
+        Route::post('store', [TagController::class, 'store'])->name('admin-api.tags.store');
     });
 });
 

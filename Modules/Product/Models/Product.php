@@ -69,6 +69,11 @@ class Product extends Model
         return $this->hasMany(Attribute::class, 'product_id', 'product_id');
     }
 
+    public function tags()
+    {
+        return $this->hasMany(Tag::class, 'product_id', 'product_id');
+    }
+
     public function images()
     {
         return $this->hasMany(Image::class, 'product_id', 'product_id');

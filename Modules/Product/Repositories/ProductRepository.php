@@ -22,6 +22,7 @@ use Modules\Product\Models\Option;
 //use Repository
 use Modules\Product\Models\Product;
 use Modules\Product\Models\Store;
+use Modules\Product\Models\Tag;
 use Modules\Product\Repositories\Interfaces\ProductRepositoryInterface;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -42,7 +43,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getList($filter, $paginate)
     {
-        $productQuery = Product::with('description', 'categories')
+        $productQuery = Product::with('description', 'categories', 'categories.category.description', 'tags.info')
             ->where('parent_id', '=', Product::PARENT_DEFAULT);
 
         if (isset($filter['filter']['product_ids'])) {
@@ -173,6 +174,18 @@ class ProductRepository implements ProductRepositoryInterface
                 }
             }
 
+            //tags
+            if (!empty($params['product_tag'])) {
+                $tags = array_map(function ($product_tag) use ($product_id) {
+                    return [
+                        'product_id' => $product_id,
+                        'tag_id' => $product_tag,
+                    ];
+                }, $params['product_tag']);
+
+                Tag::insert($tags);
+            }
+
             //category
             if (isset($params['product_category'])) {
                 foreach ($params['product_category'] as $category) {
@@ -220,7 +233,7 @@ class ProductRepository implements ProductRepositoryInterface
         $category_parents = $this->categoryService->getList([], 100);
         $manufacturers = $this->manufacturerService->getList([], 100);
         $options = $this->variantService->getList([], 100);
-        $product = Product::with('description', 'categories', 'options')->findOrFail($id);
+        $product = Product::with('description', 'categories', 'categories.category.description', 'options', 'tags.info')->findOrFail($id);
 
         return [
             'category_parents' => $category_parents,
@@ -256,7 +269,7 @@ class ProductRepository implements ProductRepositoryInterface
                 Image::create($image);
             }
         }
-        
+
         //update product option
         if (isset($params['product_option'])) {
             Option::where('product_id', $id)->delete();
@@ -277,6 +290,19 @@ class ProductRepository implements ProductRepositoryInterface
                 $attribute['product_id'] = $id;
                 Attribute::create($attribute);
             }
+        }
+
+        //update product tags
+        if (!empty($params['product_tag'])) {
+            Tag::where('product_id', $id)->delete();
+            $tags = array_map(function ($product_tag) use ($id) {
+                return [
+                    'product_id' => $id,
+                    'tag_id' => $product_tag,
+                ];
+            }, $params['product_tag']);
+
+            Tag::insert($tags);
         }
 
         //category
