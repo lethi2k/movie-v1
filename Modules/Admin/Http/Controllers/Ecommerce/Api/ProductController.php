@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function __construct(
         CategoryRepositoryInterface $categoryService,
         ProductRepositoryInterface $productService,
-        OptionRepositoryInterface $variantService,
+        OptionRepositoryInterface $variantService
     ) {
         $this->categoryService = $categoryService;
         $this->productService = $productService;
