@@ -5,19 +5,23 @@ namespace Modules\Admin\Http\Controllers\Ecommerce\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Category\Repositories\Interfaces\CategoryRepositoryInterface;
+use Modules\Option\Repositories\Interfaces\OptionRepositoryInterface;
 use Modules\Product\Repositories\Interfaces\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
     private $categoryService;
     private $productService;
+    private $variantService;
 
     public function __construct(
         CategoryRepositoryInterface $categoryService,
-        ProductRepositoryInterface $productService
+        ProductRepositoryInterface $productService,
+        OptionRepositoryInterface $variantService,
     ) {
         $this->categoryService = $categoryService;
         $this->productService = $productService;
+        $this->variantService = $variantService;
     }
 
     public function index(Request $request)
@@ -88,5 +92,59 @@ class ProductController extends Controller
             'success' => true,
             'message' => 'Xóa sản phẩm thành công',
         ]);
+    }
+
+    private function getOption($options)
+    {
+        $data_options = [];
+        foreach ($options as $option) {
+            $_values = $this->variantService->getValueByOption($option->option_id);
+            $data_options[$option->option_id]['description'] = $option->description->toArray();
+            $data_options[$option->option_id] = $option->toArray();
+            $data_options[$option->option_id]['values'] = [];
+
+            foreach ($_values as $key => $value) {
+                $data_options[$option->option_id]['values'][$key]['description'] = $value->description->toArray();
+                $data_options[$option->option_id]['values'][$key] = $value->toArray();
+            }
+        }
+
+        return $data_options;
+    }
+
+    private function combinations($arrays, $i = 0)
+    {
+        if (!isset($arrays[$i])) {
+            return [];
+        }
+        if ($i == count($arrays) - 1) {
+            return $arrays[$i];
+        }
+
+        // get combinations from subsequent arrays
+        $tmp = $this->combinations($arrays, $i + 1);
+
+        $result = [];
+
+        $dem = 0;
+        // concat each array from tmp with each element from $arrays[$i]
+        foreach ((array)$arrays[$i] as $v) {
+            foreach ($tmp as $t) {
+                $result[] = is_array($t) ? array_merge([$v], $t) : [$v, $t];
+                if (isset($result[$dem]['text']) && !empty($result[$dem]['text'])) {
+                    $result[$dem][] = [
+                        'text' => $result[$dem]['text'],
+                        'id' => $result[$dem]['id'],
+                    ];
+
+                    unset($result[$dem]['text']);
+                    unset($result[$dem]['id']);
+                }
+                $dem++;
+            }
+        }
+
+
+        return $result;
     }
 }

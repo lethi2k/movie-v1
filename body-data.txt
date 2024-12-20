@@ -1,0 +1,112 @@
+add category
+{
+  "category": {
+    "parent_id": 0,
+    "sort_order": 0,
+    "status": "on",
+    "image": "images/default.png"
+  },
+  "category_description": {
+    "name": "test aaaa",
+    "description": "",
+    "meta_title": "test-aaaa",
+    "seo_url": "test-aaaa",
+    "meta_description": ""
+  }
+}
+
+
+update categories
+http://127.0.0.1:8000/admin/category/update/64
+{
+  "category": {
+    "parent_id": 0,
+    "sort_order": 0,
+    "status": "on",
+    "image": "images/default.png"
+  },
+  "category_description": {
+    "name": "test aaaabbbbbbbb",
+    "description": "",
+    "meta_title": "test aaaabbbbbbbb",
+    "seo_url": "test-aaaabbbbbbbb",
+    "meta_description": ""
+  }
+}
+
+
+add products
+{
+  "_token": "WeiqvhGOyB2mhEKGU5LRMpY8lajsAbK5AizKZGFa",
+  "product": {
+    "org_id": 0,
+    "status_check": 2,
+    "video": 0,
+    "quality": "720p",
+    "year_manufacture": "",
+    "rate": "",
+    "quantity": 0,
+    "location": "",
+    "warning": "",
+    "episode_duration": "",
+    "url_trainner": "",
+    "status": "active",
+    "type_movie": "one_episodes",
+    "image": "http://127.0.0.1:8000/images/default.png"
+  },
+  "product_description": {
+    "tag": "",
+    "language_id": 1,
+    "name": "Những Ca Khúc Hay Nhất Của Tuấn Hưng - Phần 2",
+    "description": "",
+    "meta_keyword": ""
+  },
+  "date_available": "",
+  "product_option": {
+    "1000": {
+      "episode": 1,
+      "product_option_id": 1000,
+      "value": "https://www.youtube.com/watch?v=bjfEmEK3u0s"
+    }
+  }
+}
+
+update products
+http://127.0.0.1:8000/api/admin/products/update/78
+{
+  "product": {
+    "org_id": 0,
+    "status_check": 2,
+    "video": 0,
+    "quality": "720p",
+    "year_manufacture": 0,
+    "rate": "",
+    "quantity": 0,
+    "location": 0,
+    "warning": 0,
+    "episode_duration": 0,
+    "url_trainner": "",
+    "status": "active",
+    "type_movie": "one_episodes",
+    "image": "http://127.0.0.1:8000/images/default.png"
+  },
+  "product_description": {
+    "tag": "",
+    "language_id": 1,
+    "name": "Những Ca Khúc Hay Nhất Của Tuấn Hưng heheh",
+    "description": "",
+    "meta_keyword": "nhung-ca-khuc-hay-nhat-cua-tuan-hung"
+  },
+  "product_category": [
+    { "category_id": 1 },
+    { "category_id": 3 }
+  ],
+  "date_available": "",
+  "product_option": {
+    "1217": {
+      "episode": 1,
+      "product_option_id": 1217,
+      "value": "https://www.youtube.com/watch?v=bjfEmEK3u0s"
+    }
+  }
+}
