@@ -5,6 +5,7 @@ namespace Modules\Admin\Http\Controllers\Ecommerce\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Core\Models\Tag;
+use Modules\Product\Models\Tag as ModelsTag;
 
 class TagController extends Controller
 {
@@ -37,5 +38,16 @@ class TagController extends Controller
             'message' => 'Thêm thành công',
             'tag' => $tag,
         ], 201);
+    }
+
+    public function destroy($id)
+    {
+        ModelsTag::where('tag_id', $id)->delete();
+        Tag::find($id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Xóa thành công',
+        ]);
     }
 }

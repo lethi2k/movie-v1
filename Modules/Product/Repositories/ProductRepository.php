@@ -43,7 +43,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getList($filter, $paginate)
     {
-        $productQuery = Product::with('description', 'categories', 'categories.category.description', 'tags.info')
+        $productQuery = Product::with('description', 'categories', 'categories.category.description', 'options', 'tags.info')
             ->where('parent_id', '=', Product::PARENT_DEFAULT);
 
         if (isset($filter['filter']['product_ids'])) {
