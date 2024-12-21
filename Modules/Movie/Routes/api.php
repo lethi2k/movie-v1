@@ -53,6 +53,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('tags')->group(function () {
         Route::get('/', [TagController::class, 'index'])->name('admin-api.tags.list');
         Route::post('store', [TagController::class, 'store'])->name('admin-api.tags.store');
+        Route::get('edit/{id}', [TagController::class, 'edit'])->name('admin-api.tags.edit');
+        Route::post('update/{id}', [TagController::class, 'update'])->name('admin-api.tags.update');
         Route::get('destroy/{id}', [TagController::class, 'destroy'])->name('admin-api.tags.destroy');
     });
 });

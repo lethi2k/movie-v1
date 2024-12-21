@@ -40,6 +40,36 @@ class TagController extends Controller
         ], 201);
     }
 
+    public function edit($id)
+    {
+        $tag = Tag::findOrFail($id);
+
+        return response()->json([
+            'tag' => $tag,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $data = $request->only(['name']);
+        $data['alias'] = seo_url($data['name']);
+        $data['type'] = 1;
+        $data['language_id'] = 1;
+
+        $tag = Tag::findOrFail($id);
+        $tag->update($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cập nhật thành công',
+            'tag' => $tag,
+        ]);
+    }
+
     public function destroy($id)
     {
         ModelsTag::where('tag_id', $id)->delete();

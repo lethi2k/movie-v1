@@ -64,7 +64,7 @@ class MovieController extends Controller
                 'date_added' => 'desc',
                 'limit' => 9
             ]
-        ], 18);
+        ], 24);
 
         return response()->json([
             'products' => $products,
@@ -78,7 +78,7 @@ class MovieController extends Controller
                 'viewed' => 'desc',
                 'limit' => 9
             ]
-        ], 12);
+        ], 24);
 
         return response()->json([
             'products' => $products,
@@ -113,7 +113,7 @@ class MovieController extends Controller
             ];
         }
 
-        $products = $this->productService->getList($filter, 30);
+        $products = $this->productService->getList($filter, 28);
 
         return response()->json([
             'products' => $products,
@@ -190,12 +190,24 @@ class MovieController extends Controller
             ], 404);
         }
 
+        $data['product']->increment('viewed');
+
+        $products_related = $this->productService->getList([
+            'filter' => [
+                'not_product_id' => $data['product']->product_id,
+                'categories' => $data['product']->categories->pluck('category_id')->toArray(),
+                'date_added' => 'desc',
+                'limit' => 24,
+            ]
+        ], 24);
+
         return response()->json([
             'product' => $data['product'],
+            'products_related' => $products_related
         ]);
     }
 
-    public function preview($slug, Request $request)
+    public function preview($slug)
     {
         $url = UrlAlias::where('keyword', $slug)->first();
         if ($url == null) {
