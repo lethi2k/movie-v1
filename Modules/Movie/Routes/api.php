@@ -48,6 +48,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('admin-api.users.list');
         Route::post('store', [CustomerController::class, 'store'])->name('admin-api.users.store');
+        Route::get('destroy/{id}', [CustomerController::class, 'destroy'])->name('admin-api.users.destroy');
     });
 
     Route::prefix('tags')->group(function () {

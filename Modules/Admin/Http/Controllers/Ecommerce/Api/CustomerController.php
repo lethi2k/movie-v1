@@ -37,4 +37,21 @@ class CustomerController extends Controller
             'customer' => $customer,
         ], 201);
     }
+
+    public function destroy($id)
+    {
+        $customer = CustomUser::find($id);
+        if ($customer) {
+            $customer->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Xóa thành công',
+            ], 201);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Không tìm thấy khách hàng',
+        ], 404);
+    }
 }
