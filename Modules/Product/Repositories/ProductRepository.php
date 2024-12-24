@@ -2,6 +2,8 @@
 
 namespace Modules\Product\Repositories;
 
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -245,138 +247,150 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function update(array $params, int $id)
     {
-        //update product
-        if (isset($params['product'])) {
-            $product_model = Product::findOrFail($id);
-            $column_formats = ['price', 'market_price'];
-            foreach ($column_formats as $column_format) {
-                if (isset($params['product'][$column_format])) {
-                    $params['product'][$column_format] = intval(str_replace(',', '', $params['product'][$column_format]));
+        DB::beginTransaction();
+        try {
+            //update product
+            if (isset($params['product'])) {
+                $product_model = Product::findOrFail($id);
+                $column_formats = ['price', 'market_price'];
+                foreach ($column_formats as $column_format) {
+                    if (isset($params['product'][$column_format])) {
+                        $params['product'][$column_format] = intval(str_replace(',', '', $params['product'][$column_format]));
+                    }
+                }
+
+                // $params['product']['manufacturer_id'] = (! isset($params['product']['manufacturer_id']) || ! strlen($params['product']['manufacturer_id'])) ? 0 : $params['product']['manufacturer_id'];
+                $params['product']['status'] = $params['product']['status'] == 'active' ? 1 : 0;
+                $product_model->update($params['product']);
+            }
+
+            //update product image
+            if (isset($params['product_image'])) {
+                Image::where('product_id', $id)->delete();
+                foreach ($params['product_image'] as $image) {
+                    $image['product_id'] = $id;
+                    $image['sort_order'] = 0;
+                    Image::create($image);
                 }
             }
 
-            // $params['product']['manufacturer_id'] = (! isset($params['product']['manufacturer_id']) || ! strlen($params['product']['manufacturer_id'])) ? 0 : $params['product']['manufacturer_id'];
-            $params['product']['status'] = $params['product']['status'] == 'active' ? 1 : 0;
-            $product_model->update($params['product']);
-        }
-
-        //update product image
-        if (isset($params['product_image'])) {
-            Image::where('product_id', $id)->delete();
-            foreach ($params['product_image'] as $image) {
-                $image['product_id'] = $id;
-                $image['sort_order'] = 0;
-                Image::create($image);
-            }
-        }
-
-        //update product option
-        if (isset($params['product_option'])) {
-            Option::where('product_id', $id)->delete();
-            foreach ($params['product_option'] as $product_option) {
-                Option::create([
-                    'product_id' => $id,
-                    'value' => $product_option['value'] ?? '',
-                    'episode' => $product_option['episode'] ?? ''
-                ]);
-            }
-        }
-
-        //attribute
-        if (isset($params['product_attribute'])) {
-            Attribute::where('product_id', $id)->delete();
-            foreach ($params['product_attribute'] as $attribute) {
-                $attribute['language_id'] = 1;
-                $attribute['product_id'] = $id;
-                Attribute::create($attribute);
-            }
-        }
-
-        //update product tags
-        if (!empty($params['product_tag'])) {
-            Tag::where('product_id', $id)->delete();
-            $tags = array_map(function ($product_tag) use ($id) {
-                return [
-                    'product_id' => $id,
-                    'tag_id' => $product_tag,
-                ];
-            }, $params['product_tag']);
-
-            Tag::insert($tags);
-        }
-
-        //category
-        if (isset($params['product_category'])) {
-            Category::where('product_id', $id)->delete();
-            foreach ($params['product_category'] as $category) {
-                $category['product_id'] = $id;
-                Category::create($category);
-            }
-            // $categories = $product_model->categories;
-
-            // if ($categories->count() > 0) {
-            //     $category_ids = array_map(function ($v) {
-            //         return $v['category_id'];
-            //     }, $params['product_category']);
-
-            //     foreach ($categories as $category) {
-            //         if (!in_array($category->category_id, $category_ids)) {
-            //             $category['product_id'] = $id;
-            //             Category::create($category);
-            //         };
-            //     }
-            // }
-
-            // if ($categories->count() <= 0) {
-            //     foreach ($params['product_category'] as $category) {
-            //         $category['product_id'] = $id;
-            //         Category::create($category);
-            //     }
-            // }
-        }
-
-        // description
-        if (isset($params['product_description'])) {
-            $params['product_description']['product_id'] = $id;
-            $params['product_description'] = array_map(function ($v) {
-                return (is_null($v)) ? "" : $v;
-            }, $params['product_description']);
-
-            if (is_array($params['product_description']['tag'])) {
-                $params['product_description']['tag'] = implode(',', $params['product_description']['tag']);
+            //update product option
+            if (isset($params['product_option'])) {
+                Option::where('product_id', $id)->delete();
+                foreach ($params['product_option'] as $product_option) {
+                    Option::create([
+                        'product_id' => $id,
+                        'value' => $product_option['value'] ?? '',
+                        'episode' => $product_option['episode'] ?? ''
+                    ]);
+                }
             }
 
-            $params['product_description']['meta_title'] = url_title($params['product_description']['meta_keyword']);
-            $meta_description = html_entity_decode(strip_tags($params['product_description']['description']));
-            $params['product_description']['meta_description'] = Str::of($meta_description)->limit(200)->__toString();
-
-            $product_description_model = Description::findOrFail($id);
-            $product_description_model->update($params['product_description']);
-        }
-
-        //url seo
-        if (isset($params['product_description']['meta_keyword']) && strlen($params['product_description']['meta_keyword'])) {
-            $slug = UrlAlias::where('query', 'product_id=' . $id)->count();
-            if ($slug > 0) {
-                UrlAlias::where('query', 'product_id=' . $id)->update([
-                    'keyword' => $params['product_description']['meta_keyword'],
-                ]);
+            //attribute
+            if (isset($params['product_attribute'])) {
+                Attribute::where('product_id', $id)->delete();
+                foreach ($params['product_attribute'] as $attribute) {
+                    $attribute['language_id'] = 1;
+                    $attribute['product_id'] = $id;
+                    Attribute::create($attribute);
+                }
             }
 
-            if ($slug == 0) {
-                UrlAlias::create([
-                    'query' => 'product_id=' . $id,
-                    'keyword' => $params['product_description']['meta_keyword'],
-                    'language_id' => 1,
-                ]);
-            }
-        }
+            //update product tags
+            if (!empty($params['product_tag'])) {
+                Tag::where('product_id', $id)->delete();
+                $tags = array_map(function ($product_tag) use ($id) {
+                    return [
+                        'product_id' => $id,
+                        'tag_id' => $product_tag,
+                    ];
+                }, $params['product_tag']);
 
-        return $id;
+                Tag::insert($tags);
+            }
+
+            //category
+            if (isset($params['product_category'])) {
+                Category::where('product_id', $id)->delete();
+                foreach ($params['product_category'] as $category) {
+                    $category['product_id'] = $id;
+                    Category::create($category);
+                }
+                // $categories = $product_model->categories;
+
+                // if ($categories->count() > 0) {
+                //     $category_ids = array_map(function ($v) {
+                //         return $v['category_id'];
+                //     }, $params['product_category']);
+
+                //     foreach ($categories as $category) {
+                //         if (!in_array($category->category_id, $category_ids)) {
+                //             $category['product_id'] = $id;
+                //             Category::create($category);
+                //         };
+                //     }
+                // }
+
+                // if ($categories->count() <= 0) {
+                //     foreach ($params['product_category'] as $category) {
+                //         $category['product_id'] = $id;
+                //         Category::create($category);
+                //     }
+                // }
+            }
+
+            // description
+            if (isset($params['product_description'])) {
+                $params['product_description']['product_id'] = $id;
+                $params['product_description'] = array_map(function ($v) {
+                    return (is_null($v)) ? "" : $v;
+                }, $params['product_description']);
+
+                if (is_array($params['product_description']['tag'])) {
+                    $params['product_description']['tag'] = implode(',', $params['product_description']['tag']);
+                }
+
+                $params['product_description']['meta_title'] = url_title($params['product_description']['meta_keyword']);
+                $meta_description = html_entity_decode(strip_tags($params['product_description']['description']));
+                $params['product_description']['meta_description'] = Str::of($meta_description)->limit(200)->__toString();
+
+                $product_description_model = Description::findOrFail($id);
+                $product_description_model->update($params['product_description']);
+            }
+
+            //url seo
+            if (isset($params['product_description']['meta_keyword']) && strlen($params['product_description']['meta_keyword'])) {
+                $slug = UrlAlias::where('query', 'product_id=' . $id)->count();
+                if ($slug > 0) {
+                    UrlAlias::where('query', 'product_id=' . $id)->update([
+                        'keyword' => $params['product_description']['meta_keyword'],
+                    ]);
+                }
+
+                if ($slug == 0) {
+                    UrlAlias::create([
+                        'query' => 'product_id=' . $id,
+                        'keyword' => $params['product_description']['meta_keyword'],
+                        'language_id' => 1,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return $id;
+        } catch (ModelNotFoundException $e) {
+            throw new Exception("Product not found.");
+        }
     }
 
     public function destroy($product_id)
     {
+        $product = Product::find($product_id);
+        if (!$product) {
+            throw new Exception("Product with ID $product_id not found.");
+        }
+
         $variants = Product::where('parent_id', $product_id)->get();
         if (count($variants)) {
             foreach ($variants as $variant) {
