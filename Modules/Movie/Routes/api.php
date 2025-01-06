@@ -34,7 +34,7 @@ Route::prefix('admin')->group(function () {
         Route::get('destroy/{id}', [ProductController::class, 'destroy'])->name('admin-api.product.destroy');
         Route::post('destroy/multiple', [ProductController::class, 'destroyMultiple'])->name('admin-api.product.destroy.multiple');
     });
-
+    
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('admin-api.category.list');
         Route::get('trash', [CategoryController::class, 'trash'])->name('admin-api.category.trash');
@@ -44,11 +44,12 @@ Route::prefix('admin')->group(function () {
         Route::get('destroy/{id}', [CategoryController::class, 'destroy'])->name('admin-api.category.destroy');
         Route::post('change/status', [CategoryController::class, 'changeStatus'])->name('admin-api.category.change.status');
     });
-
+    
     Route::prefix('users')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('admin-api.users.list');
         Route::post('store', [CustomerController::class, 'store'])->name('admin-api.users.store');
         Route::get('destroy/{id}', [CustomerController::class, 'destroy'])->name('admin-api.users.destroy');
+        Route::delete('destroy/multiple', [CustomerController::class, 'destroyMultiple'])->name('admin-api.users.destroy.multiple');
     });
 
     Route::prefix('tags')->group(function () {
