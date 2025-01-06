@@ -54,4 +54,29 @@ class CustomerController extends Controller
             'message' => 'Không tìm thấy khách hàng',
         ], 404);
     }
+    
+    public function destroyMultiple(Request $request)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:users,id',
+        ]);
+
+        // Perform the deletion
+        try {
+            CustomUser::whereIn('id', $validated['ids'])->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Customers removed successfully.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred while removing customers.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }
