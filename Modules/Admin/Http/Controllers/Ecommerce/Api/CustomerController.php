@@ -22,10 +22,15 @@ class CustomerController extends Controller
             'email' => 'required',
             'password' => 'required|min:6',
             'name' => 'nullable|string',
+            'details' => 'nullable|json',
         ]);
 
         $data = $request->only(['email', 'password', 'details']);
         $data['name'] = '';
+
+        if (!empty($data['details']) && is_array($data['details'])) {
+            $data['details'] = json_encode($data['details']);
+        }
 
         $customer = CustomUser::updateOrCreate(
             ['email' => $data['email']],
