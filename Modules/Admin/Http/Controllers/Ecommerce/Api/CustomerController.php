@@ -22,7 +22,7 @@ class CustomerController extends Controller
             'email' => 'required',
             'password' => 'required|min:6',
             'name' => 'nullable|string',
-            'details' => 'nullable|json',
+            'details' => 'required',
         ]);
 
         $data = $request->only(['email', 'password', 'details']);
