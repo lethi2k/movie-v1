@@ -11,5 +11,5 @@ class CustomUser extends Model
 
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'email', 'email_verified_at', 'password', 'remember_token'];
+    protected $fillable = ['name', 'email', 'email_verified_at', 'password', 'remember_token', 'details'];
 }
