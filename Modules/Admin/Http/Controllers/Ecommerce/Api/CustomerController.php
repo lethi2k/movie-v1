@@ -24,7 +24,7 @@ class CustomerController extends Controller
             'name' => 'nullable|string',
         ]);
 
-        $data = $request->only(['email', 'password']);
+        $data = $request->only(['email', 'password', 'details']);
         $data['name'] = '';
 
         $customer = CustomUser::updateOrCreate(
